@@ -4,9 +4,12 @@
   "main": "index.ts",
   "dependencies": {
     "expo": "~58.0.23",
+    "expo-clipboard": "~58.0.4",
     "expo-status-bar": "~58.0.4",
     "react": "19.3.0",
-    "react-native": "0.88.1"
+    "react-native": "0.88.1",
+    "react-native-safe-area-context": "~5.11.1",
+    "react-native-svg": "15.16.0"
   },
   "devDependencies": {
     "@types/react": "~19.3.0",
@@ -16,7 +19,9 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
+    "export:mobile": "expo export --platform ios --platform android"
   },
   "private": true
 }

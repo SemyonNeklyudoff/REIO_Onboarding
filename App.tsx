@@ -1,20 +1,20 @@
+import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Onboarding, OnboardingCompletion } from './src/onboarding';
+import { MoreScreen } from './src/demo/MoreScreen';
+import { GuideScreen } from './src/guide/GuideScreen';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+  const [screen, setScreen] = useState<'onboarding' | 'complete' | 'skip' | 'home' | 'instruction'>('onboarding');
+  return <SafeAreaProvider>
+    <StatusBar style="dark" />
+    {screen === 'onboarding'
+      ? <Onboarding onComplete={() => setScreen('complete')} onSkip={() => setScreen('skip')} />
+      : screen === 'home'
+        ? <MoreScreen onInstruction={() => setScreen('instruction')} onExit={() => setScreen('onboarding')} />
+        : screen === 'instruction'
+          ? <GuideScreen onBack={() => setScreen('home')} />
+        : <OnboardingCompletion skipped={screen === 'skip'} onStart={() => setScreen('home')} onReplay={() => setScreen('onboarding')} />}
+  </SafeAreaProvider>;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
